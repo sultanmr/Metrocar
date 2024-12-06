@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Metrocar", "Metrocar\Metrocar.pyproj", "{D5458324-D737-4A94-81C5-0F2A5575AF9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5458324-D737-4A94-81C5-0F2A5575AF9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5458324-D737-4A94-81C5-0F2A5575AF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5458324-D737-4A94-81C5-0F2A5575AF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5458324-D737-4A94-81C5-0F2A5575AF9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEB33704-3CAD-4056-961B-0155C1465E02}
+	EndGlobalSection
+EndGlobal

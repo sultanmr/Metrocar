@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">MetroCar Funnel Analysis</h1>
+<div id="funnel-chart"></div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    // Load Plotly Funnel Chart
+    const funnelData = {{ funnel_json | safe }};
+    Plotly.newPlot('funnel-chart', funnelData.data, funnelData.layout);
+</script>
+{% endblock %}
