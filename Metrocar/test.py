@@ -20,7 +20,7 @@ def test_funnel():
     ride_requests = db.load_data("ride_requests")
     transactions = db.load_data("transactions")
     funnel_viz.create_funnel(app_downloads, signups, ride_requests, transactions)
-    print (funnel_viz)
+   
 
 def save_data_locally():
     tables_to_test = db.get_table_names()

@@ -15,9 +15,10 @@ class Signups:
         return len(self.data)
 
     def get_age_ranges(self):
-        age_ranges = self.data['age_range'].unique().tolist()
-        age_ranges.insert(0, "All") 
-        return age_ranges
+        return ['All', '18-24', '25-34', '35-44', '45-54', 'Unknown']
+        # age_ranges = self.data['age_range'].unique().tolist()
+        # age_ranges.insert(0, "All") 
+        # return age_ranges
     
     def get_signup_by_platform(self):
         """

@@ -15,12 +15,13 @@ def get_table_names ():
     return inspector.get_table_names()
 
 def init_engine ():
+    global engine
     if engine is None:
         engine = create_engine(DATABASE_URI)
+        
 def get_connection():    
     global connection, engine
-    
-    
+    init_engine ()    
     if connection is None:
         try:
             connection = engine.connect()
@@ -31,12 +32,12 @@ def get_connection():
 
 data_dictionary = {}
 
-def is_running_locally():
-     return current_app.debug
+def is_running_locally():    
+    return current_app.debug
 
     
 def load_data_locally():
-     print ("Local loading...")
+     
      table_names = ["app_downloads", "ride_requests", "reviews", "signups", "transactions"]
      for table_name in table_names:
         try:    

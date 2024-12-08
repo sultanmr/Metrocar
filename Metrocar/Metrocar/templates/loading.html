@@ -15,7 +15,7 @@
             border: 6px solid #f3f3f3;
             border-top: 6px solid #3498db;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 2s linear infinite;
         }
 
         @keyframes spin {
@@ -39,35 +39,14 @@
     </style>
 </head>
 <body>
+    <h1>Loading data, please wait...</h1>
+
     <div class="loading-spinner"></div>
-    <p>Loading data, please wait...</p>
+
+
 </body>
 <script>    
-    function loadDashboard() {
-        const defaultData = { platform: "", age_range: "" }; // Adjust as needed for your app
-        fetch('/dashboard', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(defaultData)
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "/dashboard"; // Redirect after successful data load
-                } else {
-                    console.error('Failed to load dashboard data.');
-                    document.querySelector('p').textContent = 'Failed to load data. Please try again.';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.querySelector('p').textContent = 'An error occurred. Please try again.';
-            });
-    }
-
-    // Call the function to load the dashboard
-    loadDashboard();
+    window.location.href = "/dashboard";
 </script>
 
 </html>

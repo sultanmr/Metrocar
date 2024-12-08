@@ -33,6 +33,7 @@
     <Compile Include="Metrocar\models\app_downloads.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Metrocar\models\reviews.py" />
     <Compile Include="Metrocar\models\ride_requests.py">
       <SubType>Code</SubType>
     </Compile>
@@ -41,11 +42,8 @@
     </Compile>
     <Compile Include="Metrocar\models\transactions.py" />
     <Compile Include="Metrocar\models\__init__.py" />
-    <Compile Include="Metrocar\visualizations\age_group.py" />
     <Compile Include="Metrocar\visualizations\funnel.py" />
-    <Compile Include="Metrocar\visualizations\platform.py" />
-    <Compile Include="Metrocar\visualizations\ride_distribution.py" />
-    <Compile Include="Metrocar\visualizations\table.py" />
+    <Compile Include="Metrocar\visualizations\heatmap.py" />
     <Compile Include="runserver.py" />
     <Compile Include="Metrocar\__init__.py" />
     <Compile Include="Metrocar\views.py" />
@@ -65,10 +63,7 @@
   <ItemGroup>
     <Content Include="Metrocar\static\css\styles.css" />
     <Content Include="Metrocar\templates\dashboard.html" />
-    <Content Include="Metrocar\templates\funnel.html" />
-    <Content Include="Metrocar\templates\bargraph.html" />
     <Content Include="Metrocar\templates\loading.html" />
-    <Content Include="Metrocar\templates\table_view.html" />
     <Content Include="requirements.txt" />
     <Content Include="Metrocar\static\content\bootstrap.css" />
     <Content Include="Metrocar\static\content\bootstrap.min.css" />
@@ -92,9 +87,6 @@
     <Content Include="Metrocar\static\scripts\respond.js" />
     <Content Include="Metrocar\static\scripts\respond.min.js" />
     <Content Include="Metrocar\static\scripts\_references.js" />
-    <Content Include="Metrocar\templates\about.html" />
-    <Content Include="Metrocar\templates\contact.html" />
-    <Content Include="Metrocar\templates\index.html" />
     <Content Include="Metrocar\templates\layout.html" />
   </ItemGroup>
   <ItemGroup>

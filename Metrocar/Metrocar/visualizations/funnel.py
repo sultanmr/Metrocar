@@ -48,23 +48,8 @@ def render_funnel(funnel_group):
     )
     return fig
 
-def create_platform_funnel(data):
-    global report_columns    
-    grouped_data = data.groupby('platform')[report_columns].sum()
-    return render_funnel(grouped_data)
-    
-def create_funnel(app_downloads, signups, ride_requests, transactions):
-    # Use the classes to get the data
-    downloads = app_downloads.get_platform_distribution().sum()
-    signups_count = signups.get_signup_count()
-    ride_requests_count = ride_requests.get_ride_request_count()
-    completed_rides = transactions.get_completed_rides()
 
-    # Create the funnel chart
-    funnel_fig = go.Figure(
-        go.Funnel(
-            y=['Downloads', 'Signups', 'Ride Requests', 'Completed Rides'],
-            x=[downloads, signups_count, ride_requests_count, completed_rides]
-        )
-    )
-    return to_json(funnel_fig)
+def get_fig(data, group_name):
+    return render_funnel(data)
+
+    

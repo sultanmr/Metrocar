@@ -1,11 +1,229 @@
-{% extends 'base.html' %}
-{% block content %}
-<h1 class="text-center">MetroCar Funnel Analysis</h1>
-<div id="funnel-chart"></div>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script>
-    // Load Plotly Funnel Chart
-    const funnelData = {{ funnel_json | safe }};
-    Plotly.newPlot('funnel-chart', funnelData.data, funnelData.layout);
-</script>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Platform Funnel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #2e7d32;
+            color: white;
+            padding: 0;
+            display: flex;
+
+            justify-content: center; /* Center align items */
+            align-items: center;
+
+        }
+
+        .container-fluid {
+            display: flex;
+            justify-content: center; /* This ensures the logo is in the middle */
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+
+        .filter-form {
+            background-color: #a5d6a7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .visualization-container {
+            display: flex;
+            gap: 10px;
+        }
+        .heatmap-chart {             
+            grid-column: 1 / 2;
+        }
+
+        .funnel-chart {
+            grid-column: 2 / 3;
+        }
+
+         .logo {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .logo .car-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e8f5e9;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #a5d6a7;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .logo .text {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            
+            <div class="logo ms-auto">
+                <div class="car-icon">M</div>
+                <div class="text">Metrocar</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3">
+        <!-- Filter Form -->
+        <form id="filterForm" class="filter-form">
+            <div class="row g-3">
+                <div class="col-md-12">
+                    <h5>Funnel Chart Type:</h5>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="funnel_type" id="platformFunnel" value="platform" checked>
+                        <label class="form-check-label" for="platformFunnel">Platform</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="funnel_type" id="ageRangeFunnel" value="age_range">
+                        <label class="form-check-label" for="ageRangeFunnel">Age Range</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="funnel_type" id="ratingFunnel" value="rating">
+                        <label class="form-check-label" for="ratingFunnel">Rating</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="platform" class="form-label">Platforms:</label>
+                    <select id="platform" name="platform" class="form-select" multiple required>
+                        {% for p in platform %}
+                        <option value="{{ p }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="age_range" class="form-label">Age Ranges:</label>
+                    <select id="age_range" name="age_range" class="form-select" multiple required>
+                        {% for ar in age_range %}
+                        <option value="{{ ar }}">{{ ar }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="rating" class="form-label">Ratings:</label>
+                    <select id="rating" name="rating" class="form-select" multiple required>
+                        {% for r in rating %}
+                        <option value="{{ r }}">{{ r }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="purchase_amount_usd" class="form-label">Purchase Amount:</label>
+                    <select id="purchase_amount_usd" name="purchase_amount_usd" class="form-select" multiple required>
+                        {% for pa in purchase_amount_usd %}
+                        <option value="{{ pa }}">{{ pa }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button type="button" id="submitButton" class="btn btn-success">Apply Filters</button>
+            </div>
+        </form>
+
+        <!-- Visualizations -->
+        <div class="visualization-container">
+            <div id="funnelGraph" class="funnel-chart">
+                {{ funnel_html | safe }}
+            </div>
+            <div id="heatmapGraph" class="heatmap-chart">
+                {{ heatmap_html | safe }}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            const platformSelect = document.getElementById('platform');
+            const ageRangeSelect = document.getElementById('age_range');
+            const ratingSelect = document.getElementById('rating');
+            const purchaseAmountSelect = document.getElementById('purchase_amount_usd');
+
+            const selectedPlatforms = Array.from(platformSelect.selectedOptions).map(option => option.value);
+            const selectedAgeRanges = Array.from(ageRangeSelect.selectedOptions).map(option => option.value);
+            const selectedRatings = Array.from(ratingSelect.selectedOptions).map(option => option.value);
+            const selectedPurchaseAmounts = Array.from(purchaseAmountSelect.selectedOptions).map(option => option.value);
+            const selectedFunnelType = document.querySelector('input[name="funnel_type"]:checked')?.value;
+
+            const payload = {
+                platform: selectedPlatforms,
+                age_range: selectedAgeRanges,
+                rating: selectedRatings,
+                purchase_amount_usd: selectedPurchaseAmounts,
+                funnel_type: selectedFunnelType
+            };
+
+            fetch('/dashboard', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Expecting JSON response
+                })
+                .then(data => {
+                    if (data.funnel_html) {
+                        // Update the funnel graph safely
+                        const funnelGraphDiv = document.getElementById('funnelGraph');
+                        funnelGraphDiv.innerHTML = data.funnel_html;
+
+                        const scripts = funnelGraphDiv.getElementsByTagName('script');
+                        for (let script of scripts) {
+                            eval(script.innerText);
+                        }
+
+                        const heatmapGraphDiv = document.getElementById('heatmapGraph');
+                        heatmapGraphDiv.innerHTML = data.heatmap_html;
+
+                        const scripts2 = heatmapGraphDiv.getElementsByTagName('script');
+                        for (let script of scripts2) {
+                            eval(script.innerText);
+                        }
+
+                    } else if (data.error) {
+                        console.error('Error from server:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
