@@ -1,5 +1,6 @@
-Flask==2.3.3       # The core web framework
-plotly==5.15.0     # For data visualization
-gunicorn==21.2.0   # For deployment (optional, useful for production)
-psycopg2-binary==2.9.7  # If you're using PostgreSQL as the database
-sqlalchemy==2.1.1  # For ORM (optional but recommended for database queries)
+Flask==2.3.3
+plotly==5.13.0
+pandas==2.1.0
+SQLAlchemy==2.1.0
+pg8000==1.29.0
+numpy==1.25.0
