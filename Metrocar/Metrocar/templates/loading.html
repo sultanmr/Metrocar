@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading</title>
+    <style>
+        /* Simple spinner styles */
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Centering the spinner on the screen */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-spinner"></div>
+    <p>Loading data, please wait...</p>
+</body>
+<script>    
+    function loadDashboard() {
+        const defaultData = { platform: "", age_range: "" }; // Adjust as needed for your app
+        fetch('/dashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(defaultData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "/dashboard"; // Redirect after successful data load
+                } else {
+                    console.error('Failed to load dashboard data.');
+                    document.querySelector('p').textContent = 'Failed to load data. Please try again.';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.querySelector('p').textContent = 'An error occurred. Please try again.';
+            });
+    }
+
+    // Call the function to load the dashboard
+    loadDashboard();
+</script>
+
+</html>

@@ -1,8 +1,81 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Platform Funnel</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <form id="filterForm">
+        <label for="platform">Platform:</label>
+        <select id="platform" name="platform" multiple>
+            {% for platform in platforms %}
+            <option value="{{ platform }}">{{ platform }}</option>
+            {% endfor %}
+        </select>
 
-{% block content %}
-<h1>{{ title }}</h1>
-<div>
-    {{ graph_html | safe }}
-</div>
-{% endblock %}
+        <label for="age_range">Age Range:</label>
+        <select id="age_range" name="age_range" multiple>
+            {% for age_range in age_ranges %}
+            <option value="{{ age_range }}">{{ age_range }}</option>
+            {% endfor %}
+        </select>
+        <button type="button" id="submitButton">Apply Filters</button>
+    </form>
+
+
+    <div id="funnelGraph">
+        {{ graph_html | safe}}
+    </div>
+
+    <script>
+        document.getElementById('submitButton').addEventListener('click', function () {
+            const platformSelect = document.getElementById('platform');
+            const ageRangeSelect = document.getElementById('age_range');
+
+            const selectedPlatforms = Array.from(platformSelect.selectedOptions).map(option => option.value);
+            const selectedAgeRanges = Array.from(ageRangeSelect.selectedOptions).map(option => option.value);
+
+            const payload = {
+                platforms: selectedPlatforms,
+                age_ranges: selectedAgeRanges
+            };
+
+            fetch('/dashboard', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Expecting JSON response
+                })
+                .then(data => {
+                    if (data.graph_html) {
+                        // Update the funnel graph safely
+                        const funnelGraphDiv = document.getElementById('funnelGraph');
+                        funnelGraphDiv.innerHTML = data.graph_html;
+                        funnelGraphDiv.style.display = 'block'; 
+                        funnelGraphDiv.style.visibility = 'visible'; 
+                        const scripts = funnelGraphDiv.getElementsByTagName('script');
+                        for (let script of scripts) {
+                            eval(script.innerText);
+                        }
+                    } else if (data.error) {
+                        funnelGraphDiv.innerHTML = `<div>Error: ${data.error}</div>`;
+                        console.error('Error from server:', data.error);
+                    } else {
+                        funnelGraphDiv.innerHTML = `<div>No data returned from server.</div>`;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+    </script>
+
+</body>
+</html>

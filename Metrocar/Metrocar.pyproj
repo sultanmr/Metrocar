@@ -29,25 +29,32 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Metrocar\database.py" />
     <Compile Include="Metrocar\models\app_downloads.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Metrocar\models\funnel.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Metrocar\models\ride_request.py">
+    <Compile Include="Metrocar\models\ride_requests.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Metrocar\models\signups.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Metrocar\models\transactions.py" />
+    <Compile Include="Metrocar\models\__init__.py" />
+    <Compile Include="Metrocar\visualizations\age_group.py" />
+    <Compile Include="Metrocar\visualizations\funnel.py" />
+    <Compile Include="Metrocar\visualizations\platform.py" />
+    <Compile Include="Metrocar\visualizations\ride_distribution.py" />
+    <Compile Include="Metrocar\visualizations\table.py" />
     <Compile Include="runserver.py" />
     <Compile Include="Metrocar\__init__.py" />
     <Compile Include="Metrocar\views.py" />
+    <Compile Include="test.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Metrocar\" />
     <Folder Include="Metrocar\models\" />
+    <Folder Include="Metrocar\visualizations\" />
     <Folder Include="Metrocar\static\" />
     <Folder Include="Metrocar\static\content\" />
     <Folder Include="Metrocar\static\fonts\" />
@@ -60,6 +67,8 @@
     <Content Include="Metrocar\templates\dashboard.html" />
     <Content Include="Metrocar\templates\funnel.html" />
     <Content Include="Metrocar\templates\bargraph.html" />
+    <Content Include="Metrocar\templates\loading.html" />
+    <Content Include="Metrocar\templates\table_view.html" />
     <Content Include="requirements.txt" />
     <Content Include="Metrocar\static\content\bootstrap.css" />
     <Content Include="Metrocar\static\content\bootstrap.min.css" />

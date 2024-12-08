@@ -1,9 +1,11 @@
-"""
-This script runs the Metrocar application using a development server.
-"""
-
 from os import environ
-from Metrocar import app
+from Metrocar import app  # Import the app from Metrocar/__init__.py
+from Metrocar.views import views_blueprint  # Import the blueprint
+
+# Register the blueprint with the app
+app.register_blueprint(views_blueprint, url_prefix='/')
+
+
 
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
