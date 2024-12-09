@@ -20,7 +20,8 @@ def render_heatmap (data):
         ),
         xaxis=dict(        
             tickvals=np.arange(len(data.columns)),  
-            ticktext=formatted_columns  
+            ticktext=formatted_columns,
+            tickangle=45 
         ),
         plot_bgcolor='rgba(0,0,0,0)',
         paper_bgcolor='rgba(0,0,0,0)'

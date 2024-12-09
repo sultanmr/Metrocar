@@ -90,6 +90,8 @@ def merge_data ():
     all_data['ride_request'] = all_data['request_ts'].notnull()
     print ('creating  ride_finished...')  
     all_data['ride_finished'] = all_data['dropoff_ts'].notnull() &  all_data['cancel_ts'].isnull()
+    print ('creating  ride_accepted...')  
+    all_data['ride_accepted'] = all_data['request_ts'].notnull() &  all_data['accept_ts'].notnull()
     print ('creating  ride_paid...')  
     all_data['ride_paid'] = all_data['charge_status'] == 'Approved'
     print ('creating  ride_reviewed...')  

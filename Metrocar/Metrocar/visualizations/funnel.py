@@ -5,7 +5,7 @@ import colorsys
 
 
 base_color = '#006400'
-report_columns = ['signedup_users', 'ride_request', 'ride_finished', 'ride_paid', 'ride_reviewed']
+report_columns = ['signedup_users', 'ride_request', 'ride_accepted', 'ride_finished', 'ride_paid', 'ride_reviewed']
 report_columns_names = [name.replace('_', ' ').title() for name in report_columns]
 
 def generate_color_gradients(base_color, num_colors):

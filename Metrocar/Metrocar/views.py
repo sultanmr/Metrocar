@@ -17,7 +17,7 @@ views_blueprint = Blueprint('views', __name__)
 app_downloads, signups, ride_requests, transactions, reviews = None, None, None, None, None
 all_data = None
 loaded = False
-report_columns = ['signedup_users', 'ride_request', 'ride_finished', 'ride_paid', 'ride_reviewed']
+report_columns = ['signedup_users', 'ride_request', 'ride_accepted', 'ride_finished', 'ride_paid', 'ride_reviewed']
 filters_list = ['platform', 'age_range', 'rating', 'purchase_amount_usd']
 filter_data_dict = {}
 default_funnel_type = 'platform'
@@ -44,7 +44,7 @@ def load_data ():
             filter_data_dict['age_range'] = signups.get_age_ranges()
         if ride_requests is None:
             df = db.load_data("ride_requests")
-            ride_requests = models.RideRequests (df)
+            ride_requests = models.RideRequests (df)           
         if transactions is None:
             df = db.load_data("transactions")
             transactions = models.Transactions(df)
