@@ -11,6 +11,10 @@ https://metrocar-app-327932c0a948.herokuapp.com/dashboard
 https://docs.google.com/presentation/d/1-CjVszTonSd1Yc68h9f7moUg-sadrUu0vOiXzWOedZw/edit?usp=sharing
 
 ---
+# Interesting Findings
+https://github.com/sultanmr/Metrocar/blob/master/Metrocar.ipynb
+
+---
 ## Features
 
 - **User Level Funnel Analysis**: Tracks user engagement through different stages.
