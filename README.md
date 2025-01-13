@@ -3,10 +3,14 @@
 This repository contains the code and resources for the Metrocar project. The application analyzes and visualizes user and ride-level data to optimize marketing efforts, reduce waiting times, and identify user behavior patterns. The findings aim to improve the overall user experience and operational efficiency.
 
 ---
-# Live Link
+# Live Running Link
 https://metrocar-app-327932c0a948.herokuapp.com/dashboard
----
 
+---
+# Project Presentation
+https://docs.google.com/presentation/d/1-CjVszTonSd1Yc68h9f7moUg-sadrUu0vOiXzWOedZw/edit?usp=sharing
+
+---
 ## Features
 
 - **User Level Funnel Analysis**: Tracks user engagement through different stages.
